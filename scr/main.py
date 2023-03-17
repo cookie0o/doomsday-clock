@@ -26,7 +26,7 @@ def check_still(time_element):
         return False
 
 
-def status():
+def status(type): #type = full, raw, html
     try:
         # doomsday-clock time url
         URL = "https://thebulletin.org/doomsday-clock/"
@@ -35,7 +35,7 @@ def status():
         # get time element
         page = requests.get(URL)
         content = BeautifulSoup(page.content, "html.parser")
-        time_element = str(content.find("h2", class_="fl-heading"))
+        time_element_html = str(content.find("h2", class_="fl-heading"))
         """
         # response
 
@@ -45,15 +45,25 @@ def status():
         """
 
         # get time out of the html element
-        time_element = str(time_element.replace("h2", ""))
+        time_element = str(time_element_html.replace("h2", ""))
         time_definit = check_time(time_element)
         time_still   = check_still(time_element)
         time_element = str(re.search(r'\d+', time_element).group())
 
-        if time_still == True:
-            time_element = str("still "+time_element+" "+time_definit+" to midnight")
-        if time_still == False:
-            time_element = str(time_element+" "+time_definit+" to midnight")
+        # return the full message with extra text
+        if type == 0:
+            if time_still == True:
+                time_element = str("still "+time_element+" "+time_definit+" to midnight")
+            if time_still == False:
+                time_element = str(time_element+" "+time_definit+" to midnight")
+        
+        # return just number without any extra values/text
+        elif type == 1:
+            time_element = str(time_element+" "+time_definit)
+
+        # return pure html
+        elif type == 2:
+            time_element = str(time_element_html)
 
 
         return str(time_element)
