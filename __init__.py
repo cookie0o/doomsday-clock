@@ -1,1 +1,1 @@
-from scr.main import status
+from scr.main import doomsday
