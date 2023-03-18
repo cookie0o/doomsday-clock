@@ -1,6 +1,6 @@
 <div align=center>
   
-  # doomsday-clock v0.1.7
+  # doomsday-clock-status v0.1.7
   
   **A package to get the current doomsday-clock time.**
 </div>
